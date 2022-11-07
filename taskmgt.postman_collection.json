@@ -189,6 +189,16 @@
 				{
 					"name": "getAllTemmembers",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiQWthc2hTdXZhZ2l5YSIsImlhdCI6MTY2Nzg1NTAzMCwiZXhwIjoxNjY3OTQxNDMwfQ.OxW6lMQLgy5RurIDDQ-uNyUzRgN02s36Zu_VddsLCGs",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -367,6 +377,25 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "getJWTToken",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000"
+				}
+			},
+			"response": []
 		}
 	]
 }

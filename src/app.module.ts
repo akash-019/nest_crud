@@ -8,6 +8,9 @@ import { TeamMembers } from './entities/teammember';
 import { Task } from './entities/task';
 import { TeammemberModule } from './teammember/teammember.module';
 import { TaskModule } from './task/task.module';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule } from '@nestjs/config';
+import { secret } from './env';
 @Module({
   imports: [
     TeamModule,
@@ -21,8 +24,13 @@ import { TaskModule } from './task/task.module';
       entities: [Team, TeamMembers, Task],
       synchronize: true,
     }),
+    JwtModule.register({
+      secret: secret,
+      signOptions: { expiresIn: '1d' },
+    }),
     TeammemberModule,
     TaskModule,
+    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],

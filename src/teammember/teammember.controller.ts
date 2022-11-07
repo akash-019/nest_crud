@@ -1,9 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { TeammemberService } from './teammember.service';
 import { CreateTeammemberDto } from './dto/create-teammember.dto';
 import { UpdateTeammemberDto } from './dto/update-teammember.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('teammember')
+@UseGuards(AuthGuard)
 export class TeammemberController {
   constructor(private readonly teammemberService: TeammemberService) {}
 
@@ -23,7 +34,10 @@ export class TeammemberController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTeammemberDto: UpdateTeammemberDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateTeammemberDto: UpdateTeammemberDto,
+  ) {
     return this.teammemberService.update(+id, updateTeammemberDto);
   }
 
