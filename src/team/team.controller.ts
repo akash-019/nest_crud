@@ -7,11 +7,14 @@ import {
   Param,
   Delete,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { TeamService } from './team.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { QueryParamDto } from 'src/query/query-param.dto';
 
 @Controller('team')
 @UseGuards(AuthGuard)
@@ -19,6 +22,7 @@ export class TeamController {
   constructor(private readonly teamService: TeamService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   create(@Body() createTeamDto: CreateTeamDto) {
     return this.teamService.create(createTeamDto);
   }
@@ -29,17 +33,20 @@ export class TeamController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.teamService.findOne(+id);
+  @UsePipes(ValidationPipe)
+  findOne(@Param() param: QueryParamDto) {
+    return this.teamService.findOne(param.id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTeamDto: UpdateTeamDto) {
-    return this.teamService.update(+id, updateTeamDto);
+  @UsePipes(ValidationPipe)
+  update(@Param() param: QueryParamDto, @Body() updateTeamDto: UpdateTeamDto) {
+    return this.teamService.update(param.id, updateTeamDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.teamService.remove(+id);
+  @UsePipes(ValidationPipe)
+  remove(@Param() param: QueryParamDto) {
+    return this.teamService.remove(param.id);
   }
 }
